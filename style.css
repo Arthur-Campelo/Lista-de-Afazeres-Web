@@ -1,0 +1,131 @@
+#title {
+    text-align: center;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 6rem;
+    color: rgb(200, 116, 6);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(238, 221, 199);
+    font-size: larger;
+}
+
+header {
+    display: flex;
+    flex-flow: row;
+    width: 90%;
+    margin: auto auto;
+}
+
+#inputArea {
+    height: 120px;
+    width: 80%;
+    font-size: 50px;
+    border-radius: 15px;
+    border: 3px, solid, burlywood;
+    background-color: rgb(237, 236, 236);
+    padding-left: 10%;
+}
+
+#add {
+    margin-left: -3%;
+    background-color: burlywood;
+    font-size: 3rem;
+    color: rgb(32, 32, 32);
+    font-weight: bold;
+    border: 2px, solid, burlywood;
+    border-radius: 30px;
+    width: 23%;
+    cursor: pointer;
+
+
+}
+
+button {
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+button:hover {
+    transform: scale(1.09);
+    box-shadow: 0 0 10px rgb(77, 77, 77);
+}
+
+.task {
+    display: flex;
+    flex-flow: row;
+
+    height: 100px;
+    width: 90%;
+    margin: 3% auto auto auto;
+    justify-content: center;
+    align-items: center;
+
+
+    background-color: rgb(237, 236, 236);
+    box-shadow: 0 0 20px #8f8f8e;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.task-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 15%;
+    height: 100%;
+
+    font-size: 3rem;
+
+}
+
+.task-text {
+    display: flex;
+    align-items: center;
+    padding-left: 7%;
+    flex: 70%;
+    height: 100%;
+
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.task-button-area {
+    flex: 15%;
+    height: 100%;
+
+}
+
+.task-button {
+    border: 0px;
+    height: 100%;
+    width: 100%;
+    font-size: 3rem;
+    background-color: rgb(151, 21, 14);
+    color: rgb(219, 217, 217);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.mdi-check-circle {
+    color: rgb(66, 144, 66);
+}
+
+.done {
+    background-color: #aedbb3;
+    color: #8f8f8e;
+    text-decoration: line-through;
+}
+
+.done .task-button {
+    background-color: rgb(148, 82, 67);
+}
