@@ -1,12 +1,14 @@
 let input = document.getElementById("inputArea");
 let tasksArea = document.getElementById("tasksArea");
-let taskList = []
+let taskList = [];
+let grocerieList = [];
+let projectList = [];
+
+let selectedList = taskList;
 
 function add() {
     var newText = input.value;
     input.value = "";
-
-
 
     if (newText != null && newText != "") {
         newTask = `<div class="task" onclick="changeState(this)">
@@ -26,7 +28,7 @@ function add() {
             return;
         }
 
-        taskList.unshift(newTask);
+        selectedList.unshift(newTask);
         reDraw();
     }
 
@@ -34,50 +36,42 @@ function add() {
 
 function reDraw() {
     tasksArea.innerHTML = "";
-    taskList.forEach((task) => { tasksArea.innerHTML += task });
+    selectedList.forEach((task) => { tasksArea.innerHTML += task });
 }
 
 function changeState(div) {
     var classArray = Array.from(div.classList);
+    var index;
     var checkMark = div.getElementsByClassName('mdi')[0];
-    var taskText = div.querySelector('.task-text').innerText;
-
-
 
     if (!classArray.includes('done')) {
-        changePosition(div, true);
-
-        let index = taskList.findIndex(task => task.includes(taskText));
+        index = changePosition(div, true);
 
         div.classList.add('done');
         checkMark.classList.add('mdi-check-circle');
         checkMark.classList.remove('mdi-circle-outline');
 
-        taskList[index] = taskList[index].replace('mdi-circle-outline', 'mdi-check-circle').replace('class="task"', 'class="task done"');
-
+        selectedList[index] = selectedList[index].replace('mdi-circle-outline', 'mdi-check-circle').replace('class="task"', 'class="task done"');
 
     } else {
-        changePosition(div, false);
-
-        let index = taskList.findIndex(task => task.includes(taskText));
+        index = changePosition(div, false);
 
         div.classList.remove('done');
         checkMark.classList.add('mdi-circle-outline');
         checkMark.classList.remove('mdi-check-circle');
 
-        taskList[index] = taskList[index].replace('mdi-check-circle', 'mdi-circle-outline').replace('class="task done"', 'class="task"');
+        selectedList[index] = selectedList[index].replace('mdi-check-circle', 'mdi-circle-outline').replace('class="task done"', 'class="task"');
 
     }
-
     reDraw();
 }
 
 function changePosition(taskElement, goesDown) {
-    let index = taskList.findIndex(task => task.includes(taskElement.querySelector(".task-text").innerHTML));
+    let index = selectedList.findIndex(task => task.includes(taskElement.querySelector(".task-text").innerHTML));
 
     var divList = Array.from(document.getElementsByClassName("task"));
-    var element = taskList[index];
-    taskList.splice(index, 1);
+    var element = selectedList[index];
+    selectedList.splice(index, 1);
 
     reDraw();
 
@@ -86,39 +80,59 @@ function changePosition(taskElement, goesDown) {
     if (goesDown) {
         var classArray;
 
-
         if (isThereDone) {
             for (var i = 0; i < divList.length; i++) {
 
                 var task = divList[i];
+
                 classArray = Array.from(task.classList);
                 if (classArray.includes('done')) {
-                    taskList.splice(Math.max(i - 1, 0), 0, element);
-                    break;
+                    selectedList.splice(Math.max(i - 1, 0), 0, element);
+                    return Math.max(i - 1, 0);
                 }
             }
+
         } else {
-            taskList.push(element);
+
+            selectedList.push(element);
+            return selectedList.length - 1;
         }
+
     } else {
-        //checa se tem algum outro done 
-        //se não tiver
-        taskList.splice(0, 0, element);
-        //se tiver colocar no elemento uma posição antes desse
-        console.log("subindo");
+
+        selectedList.splice(0, 0, element);
+        return 0;
     }
 
     reDraw();
 }
 
 function isNew(taskNew) {
-    return !taskList.some((task) => { return task === taskNew });
+    return !selectedList.some((task) => { return task === taskNew });
 }
 
 function deleteTask(div) {
-    let index = taskList.findIndex(task => task.includes(div.parentElement.parentElement.querySelector(".task-text").innerHTML));
-    console.log(index);
+    let index = selectedList.findIndex(task => task.includes(div.parentElement.parentElement.querySelector(".task-text").innerHTML));
 
-    taskList.splice(index, 1);
+    selectedList.splice(index, 1);
     reDraw();
+}
+
+function select(selected, list) {
+    buttonList = document.getElementsByClassName('taskList');
+    for (var i = 0; i < Array.from(buttonList).length; i++) {
+        if (Array.from(buttonList[i].classList).includes('active')) {
+            buttonList[i].classList.toggle('active');
+        }
+    }
+    selected.classList.toggle('active');
+
+    selectedList = list;
+    reDraw();
+}
+
+
+
+function teste() {
+    document.getElementsByClassName("taskList")[0].classList.toggle('active');
 }
