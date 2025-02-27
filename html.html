@@ -15,23 +15,21 @@
     <h1 id="title">Tarefas</h1>
 
     <header>
-        <div id="TaskListSelector">
-            <div id="listOptions">
+        <div id="listOptions">
 
-                <div class="taskList active" onclick="select(this, taskList)">Tarefas</div>
-                <div class="taskList" onclick="select(this, grocerieList)">Compras</div>
-                <div class="taskList" onclick="select(this, projectList)">Projetos</div>
-                <!--
-                <div id="addList">
-                    <span class="material-symbols-outlined">
-                        add_box
-                    </span>
+            <div class="taskList active" onclick="select(this, 0)">Tarefas</div>
+            <div class="taskList" onclick="select(this, 1)">Compras</div>
+            <div class="taskList" onclick="select(this, 2)">Projetos</div>
 
-                </div>-->
+            <div id="addList" onclick="addList(this)">
+                <span class="material-symbols-outlined">
+                    add_box
+                </span>
 
             </div>
-            <hr style="border: 3px, solid, burlywood; margin-top: 0px">
+
         </div>
+
 
         <div id="listInputArea">
             <input id="inputArea" type="text" placeholder="Digite a sua tarefa">
