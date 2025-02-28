@@ -148,9 +148,11 @@ function select(selected, listIndex) {
             buttonList[i].classList.toggle('active');
         }
     }
-    selected.classList.toggle('active');
-    changeTheme(optionList[listIndex].colorPalet, optionList[listIndex].name);
 
+    selected.classList.toggle('active');
+
+
+    changeTheme(optionList[listIndex].colorPalet, optionList[listIndex].name);
     selectedList = optionList[listIndex].list;
     reDraw();
 }
@@ -161,27 +163,26 @@ function changeTheme(colorPalet, name) {
     var addList = document.getElementById('addList')
     var inputArea = document.getElementById('inputArea');
     var add = document.getElementById('add');
-    var taskList = document.getElementsByClassName('taskList');
     var plusIcon = document.getElementsByClassName('material-symbols-outlined');
 
     title.innerHTML = name;
 
     { //change color 1
         title.style.color = colorPalet[0];
-        Array.from(taskList).forEach((task) => {
+        /*Array.from(taskList).forEach((task) => {
             if (Array.from(task.classList).includes('active')) {
                 task.style.color = colorPalet[0]
             }
-        });
+        });*/
         plusIcon[0].style.color = colorPalet[0];
     }
     {// change color 2
-        Array.from(taskList).forEach((task) => {
+        /*Array.from(taskList).forEach((task) => {
             if (Array.from(task.classList).includes('active')) {
                 task.style.borderColor = colorPalet[1]
             }
 
-        });
+        });*/
         addList.style.borderColor = colorPalet[1];
         inputArea.style.borderColor = colorPalet[1];
         add.style.borderColor = colorPalet[1];
@@ -191,24 +192,42 @@ function changeTheme(colorPalet, name) {
         body[0].style.backgroundColor = colorPalet[2];
     }
     {//change color 4
-        Array.from(taskList).forEach((task) => {
+        /*Array.from(taskList).forEach((task) => {
             if (Array.from(task.classList).includes('active')) {
                 task.style.backgroundColor = colorPalet[3]
             }
 
-        });
+        });*/
         addList.style.backgroundColor = colorPalet[3];
     }
 }
 
 function addList(button) {
-    var newThing = document.createElement('div');
-    newThing.innerHTML = `<div class="taskList" onclick="select(this, 2)">Projetos</div>`;
+    var newDiv = document.createElement('div');
+    newDiv.innerHTML = `<div class="taskList colorPalet6" ><input placeholder="..."></input> <div class="colorPaletSelector"></div>`;
 
     var listOptions = document.getElementById("listOptions");
 
-    // Append the inner HTML (which is a div) just before the button
-    listOptions.insertBefore(newThing.firstChild, button);
+    listOptions.insertBefore(newDiv.firstChild, button);
+    var elementNewDiv = listOptions.getElementsByClassName('taskList');
+    var elementNewDivLastElement = elementNewDiv[Array.from(elementNewDiv).length-1];
+    
+    elementNewDivLastElement.setAttribute("onclick", "select(this, " + (Array.from(elementNewDiv).length - 1) + ")");
+    elementNewDivLastElement.getElementsByTagName('input')[0].setAttribute("onblur", "changeTitle(this, " + (Array.from(elementNewDiv).length - 1) + ")");
+
+
+    let newList = [];
+    optionList.push( new ListType(newList, colorPalet6, "Dê um nome:"));
+    
+    select(elementNewDivLastElement,Array.from(elementNewDiv).length-1);
+    
+
+}
+
+function changeTitle(input,index) {
+    console.log(index)
+    optionList[index].name = input.value;
+    title.innerHTML = optionList[index].name;
 }
 
 function teste() {

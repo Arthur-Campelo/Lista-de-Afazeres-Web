@@ -1,6 +1,7 @@
 #title {
     font-size: 12vw;
     color: rgb(200, 116, 6);
+    height: 141px;
     text-align: center;
     margin-bottom: 0%;
     margin-top: 0%;
@@ -35,10 +36,8 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-
+    
     border: 6px, solid, rgb(222, 184, 135);
-    color: rgb(200, 116, 6);
-    background-color: rgb(228, 202, 169);
     font-weight: bold;
     filter: brightness(90%);
     transition: all 0.3s;
@@ -52,6 +51,26 @@ body {
     border-top-right-radius: 30px;
 }
 
+.taskList input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    font-size: 1.5vw;
+    border-bottom: 0px;
+    width: 15%;
+    aspect-ratio: 3.5/1;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+
+    background-color: inherit;
+    border: 0px;
+    height: 60%;
+    width: 75%;
+    border-radius: 5%;
+    cursor: pointer;
+}
 
 .taskList.active {
     display: flex;
@@ -72,15 +91,15 @@ body {
     padding: 10px;
     position: relative;
 
-    width: 50px;
-    aspect-ratio: 1/1;
-    margin-left: -0.15vw;
+    width: 2.7vw;
+    height: 2.7vw;
+    aspect-ratio: 1 / 1;
+    margin-left: -0.20vw;
 
     border-top-right-radius: 15px;
     border: 6px, solid, rgb(222, 184, 135);
     background-color: rgb(228, 202, 169);
     border-bottom: 0px;
-    border-left: 0px;
 
 
     cursor: pointer;
@@ -233,4 +252,51 @@ button:hover {
     header {
         height: 90px;
     }
+}
+
+.colorPaletSelector {
+    width: 1.5vw;
+    height: 1.5vw;
+    margin: 0.5vw;
+    margin-top: 1vw;
+    border: 3px, solid,black;
+    background-color: inherit;
+    filter: brightness(80%);
+}
+
+.colorPalet1{
+    
+    color: rgb(200, 116, 6);
+    border-color: rgb(222, 184, 135);
+    background-color: rgb(228, 202, 169);
+}
+
+.colorPalet2 {
+    color: rgb(6, 116, 200);
+    border-color: rgb(199, 221, 238);
+    background-color: rgb(169, 202, 228);
+}
+
+.colorPalet3 {
+    color: rgb(6, 150, 75);
+    border-color: rgb(199, 238, 221);
+    background-color: rgb(169, 228, 202);
+}
+
+.colorPalet4 {
+    color: rgb(200, 40, 6);
+    border-color: rgb(238, 199, 199);
+    background-color: rgb(228, 169, 169);
+}
+
+.colorPalet5 {
+    color: rgb(116, 6, 200);
+    border-color: rgb(221, 199, 238);
+    background-color: rgb(202, 169, 228);
+}
+
+.colorPalet6 {
+    color: rgb(80, 80, 80);
+    border-color: rgb(220, 220, 220);
+    background-color: rgb(180, 180, 180);
 }
