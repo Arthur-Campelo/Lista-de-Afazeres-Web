@@ -1,5 +1,48 @@
 let input = document.getElementById("inputArea");
 let tasksArea = document.getElementById("tasksArea");
+let saveButton;
+
+//detectar enter pressionado após a janela carregar
+document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            add();
+        }
+    });
+});
+
+document.addEventListener("click", function (event) {
+    var flag = false;
+    var elements = document.querySelectorAll(".colorOption");
+    var elementsButton = document.querySelectorAll(".colorPaletSelector");
+
+    for (var i = 0; i < Array.from(elements).length; i++) {
+        if (elements[i].contains(event.target)) {
+            flag = true;
+            break;
+        }
+    }
+    for (var i = 0; i < Array.from(elementsButton).length; i++) {
+        if (elementsButton[i].contains(event.target)) {
+            flag = true;
+            break;
+        }
+    }
+
+    if (!flag) {
+        Array.from(elements).forEach((element) => { element.remove() });
+        saveButton.style.zIndex = "10";
+    }
+    /*
+        var clickedInside = Array.from(elements).some(element => element.contains(event.target));
+    
+        if (!clickedInside) {
+            console.log("hehe");
+            Array.from(elements).forEach((element) => { element.remove() })
+        } else {
+            console.log("clicked inside");
+        }*/
+});
 
 class ListType {
     constructor(list, colorPalet, name) {
@@ -165,7 +208,11 @@ function changeTheme(colorPalet, name) {
     var add = document.getElementById('add');
     var plusIcon = document.getElementsByClassName('material-symbols-outlined');
 
-    title.innerHTML = name;
+
+
+    if (!(name == undefined || name == null)) {
+        title.innerHTML = name;
+    }
 
     { //change color 1
         title.style.color = colorPalet[0];
@@ -203,33 +250,74 @@ function changeTheme(colorPalet, name) {
 }
 
 function addList(button) {
+    saveButton = button;
     var newDiv = document.createElement('div');
-    newDiv.innerHTML = `<div class="taskList colorPalet6" ><input placeholder="..."></input> <div class="colorPaletSelector"></div>`;
+    newDiv.innerHTML = `<div class="taskList colorPalet6" ><input placeholder="..."></input> <div class="colorPaletSelector" onclick="selectTheme(this)"></div>`;
 
     var listOptions = document.getElementById("listOptions");
 
     listOptions.insertBefore(newDiv.firstChild, button);
     var elementNewDiv = listOptions.getElementsByClassName('taskList');
-    var elementNewDivLastElement = elementNewDiv[Array.from(elementNewDiv).length-1];
-    
+    var elementNewDivLastElement = elementNewDiv[Array.from(elementNewDiv).length - 1];
+
     elementNewDivLastElement.setAttribute("onclick", "select(this, " + (Array.from(elementNewDiv).length - 1) + ")");
     elementNewDivLastElement.getElementsByTagName('input')[0].setAttribute("onblur", "changeTitle(this, " + (Array.from(elementNewDiv).length - 1) + ")");
 
 
     let newList = [];
-    optionList.push( new ListType(newList, colorPalet6, "Dê um nome:"));
-    
-    select(elementNewDivLastElement,Array.from(elementNewDiv).length-1);
-    
+    optionList.push(new ListType(newList, colorPalet6, "Dê um nome:"));
+
+    select(elementNewDivLastElement, Array.from(elementNewDiv).length - 1);
+
 
 }
 
-function changeTitle(input,index) {
-    console.log(index)
+function selectTheme(element) {
+    if (Array.from(element.parentElement.classList).includes('active')) {
+        var newDiv = document.createElement("div");
+        newDiv.classList.add('colorOption');
+        newDiv.addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+        saveButton.style.zIndex = "-10";
+
+        element.append(newDiv);
+
+        for (var i = 0; i < 5; i++) {
+            var classType = "colorPalet" + (i + 1)
+            var listOptions = document.getElementById("listOptions");
+            var elementNewDiv = listOptions.getElementsByClassName('taskList');
+
+            var newColorOption = document.createElement('div');
+            newColorOption.innerHTML = `<div class="colorPaletSelector ` + classType + `" onclick="setTheme(this,` + classType + `,` + (i + 1) + `,` + (Array.from(elementNewDiv).length - 1) + `)" style="width: 40px; height:40px" >`;
+
+            newDiv.append(newColorOption);
+        }
+    }
+}
+
+function setTheme(element, classType, classThemeIndex, index) {
+    changeTheme(classType);
+    parentTaskSelector = element.closest('.active');
+
+    Array.from(parentTaskSelector.classList).forEach((cls) => {
+        if (cls.startsWith("colorPalet")) {
+            parentTaskSelector.classList.remove(cls);
+        }
+    });
+    parentTaskSelector.classList.add("colorPalet" + classThemeIndex);
+    //optionList[index].colorPalet = colorPalet+classThemeIndex;//Array.from(element.classList)[1];
+    optionList[index].colorPalet = eval("colorPalet" + classThemeIndex);
+}
+
+
+function changeTitle(input, index) {
     optionList[index].name = input.value;
     title.innerHTML = optionList[index].name;
 }
 
 function teste() {
-    document.getElementsByClassName("taskList")[0].classList.toggle('active');
+    var elements = document.querySelectorAll(".colorOption");
+    Array.from(elements).forEach((element) => { element.remove() })
+
 }
